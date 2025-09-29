@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     AWS_REGION: "ap-south-1"                # change to your region
-    ECR_REPOSITORY: "springbootregistry"   # ECR repo name
+    ECR_REPOSITORY: "springbootregistrypart2"   # ECR repo name
 
 phases:
   install:
