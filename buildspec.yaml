@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     AWS_REGION: "ap-south-1"                # change to your region
-    ECR_REPOSITORY: "springbootregistrypart2"   # ECR repo name
+    ECR_REPOSITORY: "springbootrepo"   # ECR repo name
 
 phases:
   install:
@@ -34,8 +34,12 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing imagedefinitions.json file...
-      - printf '[{"name":"springbootregistrypart2","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-
+      - printf '[{"name":"$ECR_REPOSITORY","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - DOCKER_CONTAINER_NAME=$ECR_REPOSITORY
+      - printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo $DOCKER_CONTAINER_NAME
+      - echo printing imagedefinitions.json...
+      - cat imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
